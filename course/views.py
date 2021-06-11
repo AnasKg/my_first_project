@@ -17,6 +17,13 @@ def branches_list(request):
     return render(request, 'course/branches-list.html', context=my_context)
 
 
+def branch_detail(request, branch_id):
+    branch = Branch.objects.get(id=branch_id)
+    groups = Group.objects.filter(branch=branch)
+    context = {'branch': branch, 'groups': groups}
+    return render(request, 'course/branch-detail.html', context=context)
+
+
 def group_list(request):
     groups = Group.objects.all()
     my_context = {'groups': groups}
