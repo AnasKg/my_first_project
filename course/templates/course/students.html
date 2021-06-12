@@ -24,7 +24,11 @@
             </thead>
             <tbody>
                 {% for student in students %}
-                <tr>
+                {% if student.gender == "male" %}
+                <tr style="background-color: blue;">
+                {% else %}
+                <tr style="background-color: pink;">
+                {% endif %}
                     <th scope="row">{{ student.id }}</th>
                     <td>{{ student.name }}</td>
                     <td>{{ student.phone_number }}</td>

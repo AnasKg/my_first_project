@@ -8,7 +8,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 </head>
 <body>
-    <h1> {{ student.name }}</h1>
+    {% if student.gender == "male"%}
+    <h1 style="color:  blue;"> {{ student.name }}</h1>
+    {% else %}
+    <h1 style="color: pink;"> {{ student.name }}</h1>
+    {% endif %}
+
     <p>Дата рождения: <strong>{{ student.date_of_birth }} </strong></p>
     <p>Адрес: <strong>{{ student.address }} </strong></p>
     <p>Номер телефона: <strong>{{ student.phone_number }} </strong></p>
