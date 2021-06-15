@@ -6,11 +6,7 @@ from .models import Branch, Group, Student
 
 
 def my_main_page(request):
-    my_context = {
-        'name': 'ITC',
-        'my_list': [1,2,3,4,5]
-    }
-    return render(request, 'course/my_page.html', context=my_context)
+    return render(request, 'course/my_page.html')
 
 
 def branches_list(request):
@@ -36,6 +32,27 @@ def branch_create(request):
         form = BranchForm()
 
     return render(request, 'course/branch-create.html', {'form': form})
+
+
+def branch_edit(request, branch_id):
+    # Получить объект или если не существует то вывести ошибку 404 
+    branch = get_object_or_404(Branch, pk=branch_id)
+    # Проверяем метод запроса, если POST то обновляем наши данные
+    if request.method == "POST":
+        # используем django form(BranchForm), для проверки полученных данных
+        # Полученные данные находятся request.POST 
+        form = BranchForm(request.POST)
+        # Проверяем валидна(все ли данные введены правильно) ли наша форма
+        if form.is_valid():
+            # Сохраняем изменения в БД
+            branch = form.save()
+            # Перенаправляем пользователя к подробрной информации филиала
+            return redirect('branch_detail', branch_id=branch.id)
+    else:
+        # Если не POST запрос, то открываем форму для редактирования
+        form = BranchForm(instance=branch)
+    
+    return render(request, 'course/branch-edit.html', {'form': form})
 
 
 def group_list(request):

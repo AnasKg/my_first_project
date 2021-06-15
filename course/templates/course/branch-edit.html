@@ -1,9 +1,9 @@
 {% extends 'course/base.html' %}
 
 {% block content %}
-    <h1>Новый филиал</h1>
+    <h1>Изменения филиала</h1>
     <form method="POST" class="post-form">
-
+        {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-success">Сохранить</button>
     </form>

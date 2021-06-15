@@ -1,4 +1,4 @@
-{% extends 'course/base.html' %}
+{% extends "course/base.html" %}
 {% block content %}
     <h1> {{ branch.name }}</h1>
     <p>Адрес: <strong>{{ branch.address }} </strong></p>
@@ -10,4 +10,6 @@
             <li>{{ g.name }}</li>
         {% endfor %}
     </ul>
+
+    <a href="{% url 'branch_edit' branch.id %}" class="btn btn-primary">Изменить</a>
 {% endblock %}
