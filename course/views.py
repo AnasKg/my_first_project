@@ -41,7 +41,7 @@ def branch_edit(request, branch_id):
     if request.method == "POST":
         # используем django form(BranchForm), для проверки полученных данных
         # Полученные данные находятся request.POST 
-        form = BranchForm(request.POST)
+        form = BranchForm(request.POST, instance=branch)
         # Проверяем валидна(все ли данные введены правильно) ли наша форма
         if form.is_valid():
             # Сохраняем изменения в БД
