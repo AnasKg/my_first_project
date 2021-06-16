@@ -24,7 +24,7 @@ def branch_detail(request, branch_id):
 
 def branch_create(request):
     if request.method == "POST":
-        form = BranchForm(request.POST)
+        form = BranchForm(request.POST, request.FILES)
         if form.is_valid():
             branch = form.save()
             return redirect('branch_detail', branch_id=branch.id)

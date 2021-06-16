@@ -3,6 +3,12 @@
     <h1> {{ branch.name }}</h1>
     <p>Адрес: <strong>{{ branch.address }} </strong></p>
 
+    {% if branch.photo %}
+    <img src="{{ branch.photo.url }}" width="100px" height="100px" >
+    {% else %}
+    <p>Фотки отсутсвтует!</p>
+    {% endif %}
+
     <p>Группы данного филиала: </p>
 
     <ul>
