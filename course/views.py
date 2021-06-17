@@ -1,8 +1,8 @@
 from course.forms import BranchForm
 from django.http.response import Http404
 from django.shortcuts import get_object_or_404, redirect, render
-from django.http import HttpResponse
 from .models import Branch, Group, Student
+from django.views.generic import ListView, DetailView
 
 
 def my_main_page(request):
@@ -11,8 +11,19 @@ def my_main_page(request):
 
 def branches_list(request):
     branches = Branch.objects.all()
-    my_context = {'branches': branches}
+    my_context = {'branches': branches, 'age': 20}
     return render(request, 'course/branches-list.html', context=my_context)
+
+
+# Создание view на основе класса, используем готовый класс ListView
+class BranchListView(ListView):
+    # Указываем модель 
+    model = Branch
+    # Указываем шаблон(template)
+    template_name = 'course/branches-list.html'
+    # указываем название переменной в контексте(context), которая содержит список объектов
+    # указанной модели, по умолчание значение context_object_name имеет 'object_list'
+    context_object_name = 'branches'
 
 
 def branch_detail(request, branch_id):
@@ -20,6 +31,27 @@ def branch_detail(request, branch_id):
     groups = Group.objects.filter(branch=branch)
     context = {'branch': branch, 'groups': groups}
     return render(request, 'course/branch-detail.html', context=context)
+
+
+# Создание view на основе класса, используем готовый класс ListView
+class BranchDetailView(DetailView):
+    # Указываем модель
+    model = Branch
+    # Указываем шаблон(template)
+    template_name = 'course/branch-detail.html'
+    # указываем название переменной в контексте(context), которая содержит объект
+    # указанной модели, по умолчание значение context_object_name имеет 'object'
+    context_object_name = 'branch'
+    # указываем название аргумента для id в url, по умолчанию pk
+    pk_url_kwarg = 'branch_id'
+
+    def get_context_data(self, **kwargs):
+        # метод который получает context, который находится у родительского класса,
+        # переопределяем(измененили, переделали) для добавления дополнительных конекстов
+        context = super().get_context_data(**kwargs)
+        # получаю группу данного филиала
+        context['groups'] = Group.objects.filter(branch=self.object)
+        return context
 
 
 def branch_create(request):
