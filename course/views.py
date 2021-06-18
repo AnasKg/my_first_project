@@ -2,7 +2,7 @@ from course.forms import BranchForm
 from django.http.response import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import Branch, Group, Student
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 
 def my_main_page(request):
@@ -66,6 +66,12 @@ def branch_create(request):
     return render(request, 'course/branch-create.html', {'form': form})
 
 
+class BranchCreateView(CreateView):
+    model = Branch
+    fields = ['name', 'address', 'photo']
+    template_name = 'course/branch-create.html'
+
+
 def branch_edit(request, branch_id):
     # Получить объект или если не существует то вывести ошибку 404 
     branch = get_object_or_404(Branch, pk=branch_id)
@@ -85,6 +91,13 @@ def branch_edit(request, branch_id):
         form = BranchForm(instance=branch)
     
     return render(request, 'course/branch-edit.html', {'form': form})
+
+
+class BranchUpdateView(UpdateView):
+    model = Branch
+    fields = ['name', 'address', 'photo']
+    template_name = 'course/branch-edit.html'
+    pk_url_kwarg = 'branch_id'
 
 
 def group_list(request):

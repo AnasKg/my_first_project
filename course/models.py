@@ -14,6 +14,10 @@ class Branch(models.Model):
     def __str__(self):
         return self.name
     
+    def get_absolute_url(self):
+        return reverse("branch_detail", kwargs={"branch_id": self.pk})
+    
+    
 
 class Group(models.Model):
     class Meta:
