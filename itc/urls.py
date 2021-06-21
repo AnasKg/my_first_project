@@ -22,5 +22,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('course/', include('course.urls')),
+    
+    path('user/', include('django.contrib.auth.urls')),
+
     path('',  my_main_page, name='main_page')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
