@@ -6,7 +6,7 @@
     {% if branch.photo %}
     <img src="{{ branch.photo.url }}" width="100px" height="100px" >
     {% else %}
-    <p>Фотки отсутсвтует!</p>
+    <p>Фото отсутсвтует!</p>
     {% endif %}
 
     <p>Группы данного филиала: </p>
@@ -16,6 +16,7 @@
             <li>{{ g.name }}</li>
         {% endfor %}
     </ul>
-
+    {% if user.is_authenticated and user.is_staff %}
     <a href="{% url 'branch_edit' branch.id %}" class="btn btn-primary">Изменить</a>
+    {% endif %}
 {% endblock %}

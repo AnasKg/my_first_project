@@ -4,6 +4,10 @@ from django.shortcuts import get_object_or_404, redirect, render
 from .models import Branch, Group, Student
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
+from django.contrib.auth.decorators import login_required
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 def my_main_page(request):
     return render(request, 'course/my_page.html')
@@ -17,6 +21,7 @@ def branches_list(request):
 
 # Создание view на основе класса, используем готовый класс ListView
 class BranchListView(ListView):
+    # login_url = '/user/login/'
     # Указываем модель 
     model = Branch
     # Указываем шаблон(template)
@@ -53,7 +58,8 @@ class BranchDetailView(DetailView):
         context['groups'] = Group.objects.filter(branch=self.object)
         return context
 
-
+# декоратор login_required проверяет авторизован ли пользователь
+@login_required
 def branch_create(request):
     if request.method == "POST":
         form = BranchForm(request.POST, request.FILES)
@@ -93,11 +99,12 @@ def branch_edit(request, branch_id):
     return render(request, 'course/branch-edit.html', {'form': form})
 
 
-class BranchUpdateView(UpdateView):
+class BranchUpdateView(LoginRequiredMixin, UpdateView):
     model = Branch
     fields = ['name', 'address', 'photo']
     template_name = 'course/branch-edit.html'
     pk_url_kwarg = 'branch_id'
+    login_url = '/user/login/'
 
 
 def group_list(request):

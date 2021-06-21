@@ -5,7 +5,7 @@ urlpatterns = [
     path('', views.my_main_page, name='my_main_page'),
 
     path('branches/', views.BranchListView.as_view(), name='branches_list'),
-    path('branches/create/', views.BranchCreateView.as_view(), name='branch_create'),
+    path('branches/create/', views.branch_create, name='branch_create'),
     path('branches/<int:branch_id>/', views.BranchDetailView.as_view(), name='branch_detail'),
     path('branches/<int:branch_id>/edit/', views.BranchUpdateView.as_view(), name='branch_edit'),
     
