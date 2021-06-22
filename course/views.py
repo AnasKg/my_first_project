@@ -1,5 +1,5 @@
 from course.forms import BranchForm
-from django.http.response import Http404
+from django.http.response import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import Branch, Group, Student
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
@@ -64,7 +64,10 @@ def branch_create(request):
     if request.method == "POST":
         form = BranchForm(request.POST, request.FILES)
         if form.is_valid():
-            branch = form.save()
+            # commit=False чтоб не отправлять запрос в базу
+            branch = form.save(commit=False)
+            branch.creator = request.user
+            branch.save()
             return redirect('branch_detail', branch_id=branch.id)
     else:
         form = BranchForm()
@@ -76,6 +79,12 @@ class BranchCreateView(CreateView):
     model = Branch
     fields = ['name', 'address', 'photo']
     template_name = 'course/branch-create.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.creator = self.request.user
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
 
 
 def branch_edit(request, branch_id):

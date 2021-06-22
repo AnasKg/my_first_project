@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.conf import settings
 
 
 class Branch(models.Model):
@@ -10,6 +11,7 @@ class Branch(models.Model):
     name = models.CharField(max_length=100, null=False)
     address = models.CharField(max_length=300, null=True)
     photo = models.ImageField(upload_to='branches/', null=True, blank=True)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True)
 
     def __str__(self):
         return self.name
