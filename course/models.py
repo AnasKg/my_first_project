@@ -11,7 +11,8 @@ class Branch(models.Model):
     name = models.CharField(max_length=100, null=False)
     address = models.CharField(max_length=300, null=True)
     photo = models.ImageField(upload_to='branches/', null=True, blank=True)
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True, related_name='branches')
+    manager = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
@@ -28,6 +29,17 @@ class Group(models.Model):
     
     name = models.CharField(max_length=100, null=False)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
+    course = models.ForeignKey('course.Course', on_delete=models.PROTECT, null=True)
+
+    def __str__(self):
+        return self.name
+
+class Course(models.Model):    
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        verbose_name = 'курс'
+        verbose_name_plural = 'курсы'
 
     def __str__(self):
         return self.name
@@ -53,6 +65,7 @@ class Student(models.Model):
     phone_number = models.CharField(max_length=20)
     gender = models.CharField(choices=GENDER_CHOICES, max_length=6, default=MALE)
     group = models.ForeignKey(Group, on_delete=models.CASCADE, null=True)
+    courses = models.ManyToManyField(Course)
 
     def __str__(self):
         return self.name
