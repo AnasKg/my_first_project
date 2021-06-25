@@ -12,4 +12,18 @@
     <p>Пол: <strong>{{ student.gender }} </strong></p>
     <p>Группа: <strong>{{ student.group }} </strong></p>
 
+    <p>Курсы: </p>
+
+    {% comment %} <ul>    
+        {% for course in student.courses.all %}
+            <li> {{ course.name }} </li>
+        {% endfor %}
+    </ul> {% endcomment %}
+
+    <ul>
+        {% for course in courses %}
+            <li> {{ course.name }} </li>
+        {% endfor %}
+    </ul>
+
 {% endblock %}

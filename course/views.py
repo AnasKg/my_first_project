@@ -1,3 +1,4 @@
+import course
 import random
 from course.forms import BranchForm
 from django.http.response import Http404, HttpResponseRedirect
@@ -138,8 +139,25 @@ def student_list(request):
 
 def student_detail(request, student_id):
     student = Student.objects.get(id=student_id)
-    my_context = {'student': student}
+    courses = student.courses.all()
+    my_context = {'student': student, 'courses': courses}
     return render(request, 'course/student-detail.html', context=my_context)
+
+
+class StudentDetailView(DetailView):
+    model = Student
+    template_name = 'course/student-detail.html'
+    context_object_name = 'student'
+    pk_url_kwarg = 'student_id'
+
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        student = self.object
+        courses = student.courses.all()
+        context['courses'] = courses
+        return context
+
+
 
 
 def student_random(request):
