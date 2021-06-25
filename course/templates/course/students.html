@@ -1,6 +1,8 @@
 {% extends 'course/base.html' %}
 {% block content %}
     <h1 style="text-align: center;">Студенты</h1>
+    <a href="{% url 'student_random' %}" class="btn btn-primary">Выбрать рандомного студента</a>
+
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>

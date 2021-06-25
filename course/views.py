@@ -1,3 +1,4 @@
+import random
 from course.forms import BranchForm
 from django.http.response import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
@@ -138,4 +139,11 @@ def student_list(request):
 def student_detail(request, student_id):
     student = Student.objects.get(id=student_id)
     my_context = {'student': student}
+    return render(request, 'course/student-detail.html', context=my_context)
+
+
+def student_random(request):
+    students = Student.objects.all()
+    random_student = random.choice(students)
+    my_context = {'student': random_student}
     return render(request, 'course/student-detail.html', context=my_context)

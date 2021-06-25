@@ -13,5 +13,7 @@ urlpatterns = [
     path('groups/<int:group_id>/', views.group_detail, name='group_detail'),
 
     path('students/', views.student_list, name='student_list'),
-    path('students/<int:student_id>/', views.student_detail, name='student_detail')
+    path('students/<int:student_id>/', views.student_detail, name='student_detail'),
+
+    path("students/random/", views.student_random, name="student_random")
 ]
