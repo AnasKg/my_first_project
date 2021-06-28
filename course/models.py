@@ -66,6 +66,7 @@ class Student(models.Model):
     gender = models.CharField(choices=GENDER_CHOICES, max_length=6, default=MALE)
     group = models.ForeignKey(Group, on_delete=models.CASCADE, null=True)
     courses = models.ManyToManyField(Course)
+    age = models.PositiveIntegerField(null=True)
 
     def __str__(self):
         return self.name
