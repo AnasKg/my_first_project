@@ -1,3 +1,5 @@
+from course import serializers
+from course.serializers import BranchSerializer
 import course
 import random
 from course.forms import BranchForm
@@ -9,6 +11,9 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 
 def my_main_page(request):
@@ -165,3 +170,13 @@ def student_random(request):
     random_student = random.choice(students)
     my_context = {'student': random_student}
     return render(request, 'course/student-detail.html', context=my_context)
+
+
+
+class BranchAPIView(APIView):
+
+    def get(self, request, format=None):
+        branches = Branch.objects.all()
+        serializer = BranchSerializer(branches, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)

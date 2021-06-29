@@ -16,5 +16,6 @@ urlpatterns = [
     path('students/<int:student_id>/',
          views.StudentDetailView.as_view(), name='student_detail'),
 
-    path("students/random/", views.student_random, name="student_random")
+    path("students/random/", views.student_random, name="student_random"),
+    path('api/branches/', views.BranchAPIView.as_view(), name='api_branches')
 ]
