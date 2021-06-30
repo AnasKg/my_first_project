@@ -170,13 +170,3 @@ def student_random(request):
     random_student = random.choice(students)
     my_context = {'student': random_student}
     return render(request, 'course/student-detail.html', context=my_context)
-
-
-
-class BranchAPIView(APIView):
-
-    def get(self, request, format=None):
-        branches = Branch.objects.all()
-        serializer = BranchSerializer(branches, many=True)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)

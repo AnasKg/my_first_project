@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from course import views
 
 urlpatterns = [
@@ -17,5 +17,6 @@ urlpatterns = [
          views.StudentDetailView.as_view(), name='student_detail'),
 
     path("students/random/", views.student_random, name="student_random"),
-    path('api/branches/', views.BranchAPIView.as_view(), name='api_branches')
+
+    path('api/', include('course.api.urls'))
 ]

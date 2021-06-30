@@ -6,6 +6,3 @@ class BranchSerializer(serializers.Serializer):
     name = serializers.CharField(required=True)
     address = serializers.CharField(required=False)
     photo = serializers.ImageField(required=False)
-
-
-    
