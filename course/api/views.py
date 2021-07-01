@@ -1,21 +1,64 @@
 from django.http import Http404
 from rest_framework.views import APIView
 from course.models import Branch
-from course.api.serializers import BranchSerializer
+from course.api.serializers import BranchSerializer, BranchModelSerializer
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics, mixins
+
+
+# class BranchListView(generics.ListCreateAPIView):
+#     queryset = Branch.objects.all()
+#     serializer_class = BranchModelSerializer
+#
+#
+# class BranchDetailView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Branch.objects.all()
+#     serializer_class = BranchModelSerializer
+
+
+class BranchListView(mixins.CreateModelMixin,
+                     mixins.ListModelMixin,
+                     generics.GenericAPIView):
+    queryset = Branch.objects.all()
+    serializer_class = BranchModelSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+
+class BranchDetailView(mixins.DestroyModelMixin,
+                       mixins.UpdateModelMixin,
+                       mixins.RetrieveModelMixin,
+                       generics.GenericAPIView):
+    queryset = Branch.objects.all()
+    serializer_class = BranchModelSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
 
 
 class BranchAPIView(APIView):
 
     def get(self, request, format=None):
         branches = Branch.objects.all()
-        serializer = BranchSerializer(branches, many=True)
+        serializer = BranchModelSerializer(branches, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, format=None):
-        serializer = BranchSerializer(data=request.data)
+        serializer = BranchModelSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -34,12 +77,12 @@ class BranchDetailAPIView(APIView):
 
     def get(self, request, pk, format=None):
         branch = self.get_object(pk)
-        serializer = BranchSerializer(branch)
+        serializer = BranchModelSerializer(branch)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
         branch = self.get_object(pk)
-        serializer = BranchSerializer(instance=branch, data=request.data)
+        serializer = BranchModelSerializer(instance=branch, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

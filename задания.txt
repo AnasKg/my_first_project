@@ -58,3 +58,9 @@
 
 30.06.2021
 1. Сделать методы post, get(detail), put, delete для Group, Student
+
+01.07.2021
+1. Создать сериализатор, который наследует ModelSerializer для Group и Student
+2. Протестировать все API в постман и в интерфейсе Django Rest Framework
+3. Использовать миксины и GenericAPIView для создания API для ресурсов Group и Student
+4. Использовать готовые generics (ListCreateAPIView, RetrieveUpdateDestroyAPIView) для Group и Student

@@ -3,6 +3,12 @@ from rest_framework import serializers
 from course.models import Branch
 
 
+class BranchModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Branch
+        fields = ('id', 'name', 'address', 'photo', 'creator')
+
+
 class BranchSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(required=True)
