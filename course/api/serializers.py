@@ -1,12 +1,24 @@
 from rest_framework import serializers
 
-from course.models import Branch
+from course.models import Branch, Group
 
 
 class BranchModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Branch
         fields = ('id', 'name', 'address', 'photo', 'creator')
+
+
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        # instance['branch'] = instance.branch.name
+        data['branch'] = BranchModelSerializer(instance.branch).data
+        return data
 
 
 class BranchSerializer(serializers.Serializer):

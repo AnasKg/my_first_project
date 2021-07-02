@@ -1,9 +1,19 @@
 from django.http import Http404
 from rest_framework.views import APIView
-from course.models import Branch
-from course.api.serializers import BranchSerializer, BranchModelSerializer
+from course.models import Branch, Group
+from course.api.serializers import BranchSerializer, BranchModelSerializer, GroupSerializer
 from rest_framework.response import Response
-from rest_framework import status, generics, mixins
+from rest_framework import status, generics, mixins, viewsets
+
+
+class BranchViewSet(viewsets.ModelViewSet):
+    queryset = Branch.objects.all()
+    serializer_class = BranchModelSerializer
+
+
+class GroupViewSet(viewsets.ModelViewSet):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
 
 
 # class BranchListView(generics.ListCreateAPIView):
@@ -16,38 +26,38 @@ from rest_framework import status, generics, mixins
 #     serializer_class = BranchModelSerializer
 
 
-class BranchListView(mixins.CreateModelMixin,
-                     mixins.ListModelMixin,
-                     generics.GenericAPIView):
-    queryset = Branch.objects.all()
-    serializer_class = BranchModelSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
-
-class BranchDetailView(mixins.DestroyModelMixin,
-                       mixins.UpdateModelMixin,
-                       mixins.RetrieveModelMixin,
-                       generics.GenericAPIView):
-    queryset = Branch.objects.all()
-    serializer_class = BranchModelSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def patch(self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
-
+# class BranchListView(mixins.CreateModelMixin,
+#                      mixins.ListModelMixin,
+#                      generics.GenericAPIView):
+#     queryset = Branch.objects.all()
+#     serializer_class = BranchModelSerializer
+#
+#     def get(self, request, *args, **kwargs):
+#         return self.list(request, *args, **kwargs)
+#
+#     def post(self, request, *args, **kwargs):
+#         return self.create(request, *args, **kwargs)
+#
+#
+# class BranchDetailView(mixins.DestroyModelMixin,
+#                        mixins.UpdateModelMixin,
+#                        mixins.RetrieveModelMixin,
+#                        generics.GenericAPIView):
+#     queryset = Branch.objects.all()
+#     serializer_class = BranchModelSerializer
+#
+#     def get(self, request, *args, **kwargs):
+#         return self.retrieve(request, *args, **kwargs)
+#
+#     def put(self, request, *args, **kwargs):
+#         return self.update(request, *args, **kwargs)
+#
+#     def patch(self, request, *args, **kwargs):
+#         return self.partial_update(request, *args, **kwargs)
+#
+#     def delete(self, request, *args, **kwargs):
+#         return self.destroy(request, *args, **kwargs)
+#
 
 class BranchAPIView(APIView):
 
