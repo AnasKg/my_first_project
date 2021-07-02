@@ -64,3 +64,10 @@
 2. Протестировать все API в постман и в интерфейсе Django Rest Framework
 3. Использовать миксины и GenericAPIView для создания API для ресурсов Group и Student
 4. Использовать готовые generics (ListCreateAPIView, RetrieveUpdateDestroyAPIView) для Group и Student
+
+02.07.2021
+1. Создать ModelViewSet для Group, Course и Student
+2. Подключить routers для созданных ViewSets
+3. У группы сдлеать так чтобы response при get запросе поле course был не просто id,
+    а целым объектом (переопределить to_representation)
+4. У студента при get запросе поле group должен приходить(отвечать) как объект
