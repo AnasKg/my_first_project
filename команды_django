@@ -1,0 +1,48 @@
+1. Создание джанго проекта:
+django-admin startproject <название проекта>
+
+2. Создание приложения(app):
+django-admin startapp <название приложения>
+или
+python manage.py startapp <название приложения>
+
+3. Создать миграционный файл:
+python manage.py makemigrations
+
+4. Замигрировать :
+python manage.py migrate
+
+5. Запустить оболочку django:
+python manage.py shell
+
+####################################
+QUERYSET API
+
+1. Получить все объекты модели
+Model.objects.all()
+Пример: Student.objects.all()
+
+2. Фильтрация queryset:
+Model.objects.filter(field_name=value)
+
+Пример:
+Student.objects.filter(gender='male')
+
+Вышеуказанный запрос на SQL:
+SELECT * FROM student WHERE gender='male';
+
+3. Создания объекта модели:
+Model.objects.create(параметры)
+
+Пример:
+Student.objects.create(name='Test', address='asdasd', phone_number='+996777555444')
+
+
+4. Обновление QUERYSET:
+Model.objects.all().update(параметры)
+
+Пример:
+Student.objects.filter(date_of_birth__year__gt=2000).update(gender='female')
+
+
+ 
