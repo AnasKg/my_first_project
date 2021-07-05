@@ -7,6 +7,7 @@ class BranchModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Branch
         fields = ('id', 'name', 'address', 'photo', 'creator')
+        read_only_fields = ('creator',)
 
 
 class GroupSerializer(serializers.ModelSerializer):

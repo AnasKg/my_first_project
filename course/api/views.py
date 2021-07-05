@@ -4,11 +4,17 @@ from course.models import Branch, Group
 from course.api.serializers import BranchSerializer, BranchModelSerializer, GroupSerializer
 from rest_framework.response import Response
 from rest_framework import status, generics, mixins, viewsets
+from rest_framework.permissions import IsAuthenticated
 
 
 class BranchViewSet(viewsets.ModelViewSet):
     queryset = Branch.objects.all()
     serializer_class = BranchModelSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user)
+
 
 
 class GroupViewSet(viewsets.ModelViewSet):

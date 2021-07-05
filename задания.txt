@@ -101,3 +101,10 @@
     для этого создайте ProductDetailView, которая наследет DetailView
 
 Данные заполняйте через адмнику
+
+
+
+05.07.2021
+1. Для всех ViewSet(Branch, Group, Course, Student) установить permission IsAuthenticated
+2. Переопределить perform_create для BranchViewSet, GroupViewSet, StudentViewSet
+3. Протестировать все апишки на Постман
